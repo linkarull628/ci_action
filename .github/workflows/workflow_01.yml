@@ -1,61 +1,32 @@
 name: workflow_01
-2
 on:
-3
   workflow_dispatch:
-4
      inputs:
-5
       workflow_02:
-6
         description: 'ًWorkflow 2 which will be triggered'
-7
         required: true
-8
         default: 'workflow_02'
-9
-​
-10
+
       workflow2_github_account:
-11
         description: 'GitHub Account Owner'
-12
         required: true
-13
         default: 'linkarull628'
-14
-​
-15
+
       workflow2_repo_github:
-16
         description: 'repo-name'
-17
         required: true
-18
         default: 'ci_proj' 
-19
-​
-20
+
 jobs:
-21
   build:
-22
     runs-on: ubuntu-latest
-23
-​
-24
+
     steps:
-25
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-26
       - name: Test
-27
         run: |
-28
           curl -X POST https://api.github.com/repos/linkarull628/ci_proj/dispatches \
-29
           -H 'Accept: application/vnd.github.everest-preview+json' \
-30
           -u ${{ secrets.TOKEN }} \
-31
           --data '{"event_type": "Trigger Workflow", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+      - uses: actions/checkout@v3
